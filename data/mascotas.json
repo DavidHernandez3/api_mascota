@@ -1,12 +1,1 @@
-[
-    {
-        "Id":1,
-        "Nombre" :"Black",
-        "Raza" :"Pidbull", 
-        "Genero" : "Perro",
-        "Peso" : "0.25-50",
-        "FechaNacimiento" : "20/10/2023", 
-        "Esteril_Castrado" : "Esteril",
-        "Sexo" :"Macho"
-    }
-]
+{}
