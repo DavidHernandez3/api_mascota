@@ -5,6 +5,18 @@ import path from 'path';
 const mascotaFile = path.join(process.cwd(), 'data', 'mascotas.json');
 const router = Router();
 
+// Define la función para leer el archivo
+function readFile() {
+    const result = fs.readFileSync(mascotaFile, 'utf-8');
+    const json = JSON.parse(result);
+    return json;
+}
+
+// Define la función para guardar en el archivo
+function saveFile(data) {
+    fs.writeFileSync(mascotaFile, JSON.stringify(data, null, 2));
+}
+
 router.get('/', (req, res) => {
     try {
         const mascotas = readFile();
@@ -26,7 +38,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
     try {
-        const mascotaId = parseInt(req.params.id); // Cambiado a 'id' en minúsculas
+        const mascotaId = parseInt(req.params.id);
         if (isNaN(mascotaId)) {
             res.status(400).json({ error: 'ID de mascota no válido' });
             return;
@@ -39,7 +51,7 @@ router.put('/:id', (req, res) => {
         }
 
         const mascotas = readFile();
-        const index = mascotas.findIndex((m) => m.id === mascotaId); // Cambiado a 'id' en minúsculas
+        const index = mascotas.findIndex((m) => m.id === mascotaId);
         if (index === -1) {
             res.status(404).json({ error: 'Mascota no encontrada' });
             return;
@@ -57,14 +69,14 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     try {
-        const mascotaId = parseInt(req.params.id); // Cambiado a 'id' en minúsculas
+        const mascotaId = parseInt(req.params.id);
         if (isNaN(mascotaId)) {
             res.status(400).json({ error: 'ID de mascota no válido' });
             return;
         }
 
         const mascotas = readFile();
-        const index = mascotas.findIndex((m) => m.id === mascotaId); // Cambiado a 'id' en minúsculas
+        const index = mascotas.findIndex((m) => m.id === mascotaId);
         if (index === -1) {
             res.status(404).json({ error: 'Mascota no encontrada' });
             return;
@@ -78,15 +90,5 @@ router.delete('/:id', (req, res) => {
         res.status(500).json({ error: 'Error al eliminar mascota' });
     }
 });
-
-function readFile() {
-    const result = fs.readFileSync(mascotaFile, 'utf-8');
-    const json = JSON.parse(result);
-    return json;
-}
-
-function saveFile(data) {
-    fs.writeFileSync(mascotaFile, JSON.stringify(data, null, 2));
-}
 
 export default router;
